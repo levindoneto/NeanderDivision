@@ -1,0 +1,194 @@
+  0   32 134   LDA 134 //No endereço 134 coloquei um zero, daí carrego ele
+  2   16 131   STA 131 //Coloco o zero carregado em todas minhas variáveis que preciso zerar ao longo do programa, no caso aqui zerei meu código de erro
+  4   16 132   STA 132 //Zerando o resultado
+  6   16 137   STA 137 //Zerando minha auxiliar que usei para ser o A temporário 
+  8   16 140   STA 140 //Zerando minha auxiliar que usei para ser o B temporário(-B/-2*B)
+ 10   32 128   LDA 128
+ 12  144  44   JN  44 //Endereço 44 é onde está a sequência que faz mostrar o código de erro 1
+ 14   32 130   LDA 130
+ 16   48 133   ADD 133
+ 18  160  62   JZ  62 //Endereço 62 é onde está a sequencia que faz a operação 1(A/2)
+ 20   48 133   ADD 133
+ 22  160  82   JZ  82 //Endereço 82 é onde está a sequência que faz a operação 2(A/4)
+ 24   16 144   STA 144 //O programa salva  temporariamente o que tem no opcode no endereço temporário para usar mais adiante, na hora que eu for testar as operações que envolvam o B, ou seja as maiores de 2
+ 26   32 129   LDA 129
+ 28  160  56   JZ  56 //Endereço 56 é onde está a sequência que faz mostrar o código de erro 4
+ 30  144  44   JN  44
+ 32   32 144   LDA 144 //Carrego novamente meu opcode com o valor que salvei ele na linha 24
+ 34   48 133   ADD 133
+ 36  160 102   JZ  102 //Endereço 102 é onde está a sequencia que faz a operação 3(A/B)
+ 38   48 133   ADD 133
+ 40  160 205   JZ  205 //Endereço 205 é onde está a sequencia que faz a operação 4(A/B*2)
+ 42  128  50   JMP 50 //Endereço 50 é onde está a sequência que faz mostrar o código de erro 2
+ 44   32 141   LDA 141
+ 46   16 131   STA 131
+ 48  128 126   JMP 126
+ 50   32 142   LDA 142
+ 52   16 131   STA 131
+ 54  128 126   JMP 126
+ 56   32 143   LDA 143
+ 58   16 131   STA 131
+ 60  128 126   JMP 126
+ 62   32 128   LDA 128
+ 64   48 135   ADD 135
+ 66   16 137   STA 137 //Salvo resultado momentâneo num A temporário localizado
+ 68  144 165   JN  165 //Endereço 165 é onde está a sequencia que zera o opcode, e variaveis temporarias, depois vai para o Halt
+ 70   32 132   LDA 132
+ 72   48 138   ADD 138
+ 74   16 132   STA 132
+ 76   32 137   LDA 137
+ 78  160 125   JZ  125
+ 80  128  64   JMP 64
+ 82   32 128   LDA 128
+ 84   48 136   ADD 136
+ 86   16 137   STA 137
+ 88  144 165   JN  165
+ 90   32 132   LDA 132
+ 92   48 138   ADD 138
+ 94   16 132   STA 132
+ 96   32 137   LDA 137
+ 98  160 165   JZ  165
+100  128  84   JMP 84
+102   32 129   LDA 129
+104  128 233   JMP 233 //Endereço 233 é onde está a sequencia que faz o complemento de 2 do B
+106   32 128   LDA 128
+108   48 140   ADD 140
+110   16 137   STA 137
+112  144 165   JN  165
+114   32 132   LDA 132
+116   48 138   ADD 138
+118   16 132   STA 132
+120   32 137   LDA 137
+122  160 165   JZ  165
+124  128 108   JMP 108 //Dou um JMP para o 108 para continuar decrementando B até ele ficar zero ou negativo para ir para o Halt
+126  240       HLT
+127    0       NOP
+
+128    0      
+129    0      
+130    0      
+131    0      
+132    0      
+133  255      
+134    0      
+135  254      
+136  252      
+137    0      
+138    1      
+139    0      
+140    0      
+141    1      
+142    2      
+143    4      
+144    0      
+145    0      
+146    0      
+147    0      
+148    0      
+149    0      
+150    0      
+151    0      
+152    0      
+153    0      
+154    0      
+155    0      
+156    0      
+157    0      
+158    0      
+159    0      
+160    0      
+161    0      
+162    0      
+163    0      
+164    0      
+165  LDA      
+166  134      
+167  STA      
+168  131      
+169  STA      
+170  137      
+171  STA      
+172  140      
+173  STA      
+174  144 //Zerando B temporário      
+175  JMP      
+176  126      
+177    0      
+178    0      
+179    0      
+180    0      
+181    0      
+182    0      
+183    0      
+184    0      
+185    0      
+186  ADD      
+187  129      
+188  JN  //Se B>a, antes de verificar no endereço 186 quando somava B+B ele ficava negativo, daí fazendo seu complemento ele voltava a ser positivo e dava erro no resultado     
+189  125      
+190  JMP      
+191  233      
+192  NOT      
+193  ADD      
+194  138      
+195  STA      
+196  140      
+197  LDA      
+198  128      
+199  ADD      
+200  140      
+201  JN      
+202  125      
+203  JMP      
+204  209 //Depois de fazer a verificação e o (-2B) O programa segue para onde fará o procedimento normal de divisão          
+205  LDA      
+206  129      
+207  JMP      
+208  186 //O endereço 186 é onde está a sequencia que verifica se o A é menor que o B e que se isso for verdade faz o B virar (-2B) para salvar numa variável temporária        
+209  LDA      
+210  128      
+211  ADD      
+212  140      
+213  STA      
+214  137      
+215  JN      
+216  165      
+217  LDA      
+218  132      
+219  ADD      
+220  138      
+221  STA      
+222  132      
+223  LDA      
+224  137      
+225  JZ      
+226  165      
+227  JMP      
+228  211 //O endereço 211 é onde ele segue fazendo o decremento com (-2B) até chegar em 0 ou negativo em caso do dividendo ser ímpar      
+229  LDA      
+230  129      
+231  ADD      
+232  129      
+233  NOT      
+234  ADD      
+235  138      
+236  STA      
+237  140  // Salvo o B temporário       
+238  JMP      
+239  209      
+240  ADD      
+241  138      
+242  STA      
+243  140      
+244  JMP      
+245  106      
+246    0      
+247    0      
+248    0      
+249    0      
+250    0      
+251    0      
+252    0      
+253    0      
+254    0      
+255    0      
